@@ -28,13 +28,13 @@ Github Actions has following components.
 5. Actions
 
 ### Workflows
--> Workflows are *yml* file residing in `.github/workflows` path of a repository. 
+* Workflows are *yml* file residing in `.github/workflows` path of a repository. 
 
--> defines operations to run when an event related to the repository is triggered, also it describes the computing platform to execute those operations.
+* defines operations to run when an event related to the repository is triggered, also it describes the computing platform to execute those operations.
 
--> There can be more than one workflows in a single github repository triggered at different events.
+* There can be more than one workflows in a single github repository triggered at different events.
 
--> Example of events, [push, pull]. [All supported events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+* Example of events, [push, pull]. [All supported events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
     
 We will create a workflow file titled `exe-releaser.yml` inside `.github/workflows/`. Now our project structure is as follows:  
 ```
@@ -61,7 +61,7 @@ on:
     branches:
       - 'main'
 ```
-To know more about the available github action events follow this [link](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
+To know more about the available github action events see this [link](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows).
 
 However our project workflow should run whenever a `tag` is pushed. Git has a provision to mark a point in the commit history by adding a tag. We will use `tag` to mark release commits in our project. You can learn more about `git tag` from [here](https://git-scm.com/book/en/v2/Git-Basics-Tagging). 
 Our event configuration is as follows
@@ -84,15 +84,14 @@ In our case we will use a Windows machine to build the exe.
       build-release-exe: 
         runs-on: windows-latest
 ```   
-### Jobs  
--> A Job is defined by a series of steps to run  
--> Steps are described using *actions* and/or *shell* command  
--> Actions are predefiend github actions. Available from github [marketplace](https://github.com/marketplace).   
--> Steps 
+### Job  
+* A Job is defined by a series of steps to run  
+* Steps are described using *actions* and/or *shell* command  
+* Actions are predefiend github actions. Available from github [marketplace](https://github.com/marketplace).   
+* A step must have either **uses** or **run** 
     * name[Optional] -- Name of the Step   
     * uses -- link of a action  
     * run -- command to run
--> A step must have either **uses** or **run**
   
 **Project job steps**  
 1. Checkout the repository using a github actions  
@@ -132,5 +131,38 @@ Here build artifact is the exe generated in previous step. This action will add 
         artifactContentType: application/zip
         removeArtifacts: true
 ``` 
+### Code
 
-Our workflow is completed. 
+Complete workflow
+```yml
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on:
+  push:
+    tags:
+      - "*"
+jobs:
+  build-release-exe:
+    runs-on: windows-latest
+    steps:
+      - name: Repo Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: "pip"
+          architecture: "x64"
+      - name: Install Requirements
+        run: pip install -r requirements.txt
+      - name: Build exe
+        run: PyInstaller --onefile main.py
+      - name: Check Github
+        run: echo ${{ github.event.head_commit.message }}
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "dist/main.exe"
+          artifactContentType: application/zip
+          removeArtifacts: true
+```
