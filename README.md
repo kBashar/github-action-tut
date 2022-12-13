@@ -19,7 +19,7 @@ github-action-tutorial/
 `main.py` python script takes a name as input and print out `hello <name>`. README file has this tutorial written. And `requirments.txt` file is there to list out the python dependencies. All codes and files are [here](https://github.com/kBashar/github-action-tutorial).  
 
 
-Github Actions has following Ideas, these are discussed one by one with code snippet. Full code is added at [the end](#code).
+Github Actions has following Ideas, these are discussed serially(as they appear in a workflow file) with code snippet. Full code is added at [the end](#code).
 
 1. [Workflow](#workflows)
 2. [Events](#event)
