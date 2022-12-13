@@ -16,16 +16,15 @@ github-action-tutorial/
 ├─ requirements.txt
 
 ```
-`main.py` python script takes a name as input and print out `hello <name>`. README file has this tutorial written. And `requirments.txt` file is there to list out the python dependencies.  
-All codes and files are [here](https://github.com/kBashar/github-action-tutorial).
+`main.py` python script takes a name as input and print out `hello <name>`. README file has this tutorial written. And `requirments.txt` file is there to list out the python dependencies. All codes and files are [here](https://github.com/kBashar/github-action-tutorial).  
 
 
-Github Actions has following components.
-1. Workflow
-2. Events
-3. Jobs
-4. Runner
-5. Actions
+Github Actions has following Ideas
+1. [Workflow](#workflows)
+2. [Events](#event)
+3. [Jobs](#job)
+4. [Runner](#runner)
+5. [Actions](#job)
 
 ### Workflows
 * Workflows are *yml* file residing in `.github/workflows` path of a repository. 
@@ -93,14 +92,14 @@ In our case we will use a Windows machine to build the exe.
     * uses -- link of a action  
     * run -- command to run
   
-**Project job steps**  
+**Job steps**  
 1. Checkout the repository using a github actions  
 ```yml
     steps:
       - name: Repo-Checkout
         uses: actions/checkout@v3
 ```
-2. Our project is coded in python, it's time to install Python in the windows `runner`. We use the official github action of version 4 ( `actions/setup-python@v4` ) to install Python.  
+1. Our project is coded in python, it's time to install Python in the windows `runner`. We use the official github action of version 4 ( `actions/setup-python@v4` ) to install Python.  
 There is a new key `with` here, this is used to provide Input parameters to the action. In our case there are 3 such input parameters, all of them are optionals and github has ways to resolve the values in case no input is provided. We are writing them to make our build environment predictable and matching with the development enevironment.  
 
 ```yml
@@ -157,8 +156,6 @@ jobs:
         run: pip install -r requirements.txt
       - name: Build exe
         run: PyInstaller --onefile main.py
-      - name: Check Github
-        run: echo ${{ github.event.head_commit.message }}
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -166,3 +163,5 @@ jobs:
           artifactContentType: application/zip
           removeArtifacts: true
 ```
+
+**Thanks For Reading.**
