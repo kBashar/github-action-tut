@@ -75,8 +75,8 @@ on:
 Now we need to add the jobs. Multiple jobs can run in a single workflow. We will talk about jobs in detail in a bit but before that let's learn about virtual computing platforms on which the jobs run on. These are called `runner` in github actions context. Each workflow gets a runner of its own, a fresh virtual machine. `jobs` segment in the workflow gets to define the `runner` it will run on. 
 
 ### Runner
--> Github provides runners that run on Windows, Ubuntu(Linux), MacOS.
--> Runners can be self-hosted.
+* Github provides runners that run on Windows, Ubuntu(Linux), MacOS.  
+* Runners can be self-hosted.
 
 In our case we will use a Windows machine to build the exe.
 ```yml
