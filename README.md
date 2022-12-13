@@ -1,4 +1,4 @@
-# A getting started tutorial on Github Actions
+# Getting started with Github Actions
 
 Github Actions is a CI/CD platform. Full software development life cycle can be managed using github actions.
 
