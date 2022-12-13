@@ -100,7 +100,7 @@ In our case we will use a Windows machine to build the exe.
       - name: Repo-Checkout
         uses: actions/checkout@v3
 ```
-1. Our project is coded in python, it's time to install Python in the windows `runner`. We use the official github action of version 4 ( `actions/setup-python@v4` ) to install Python.  
+2. Our project is coded in python, it's time to install Python in the windows `runner`. We use the official github action of version 4 ( `actions/setup-python@v4` ) to install Python.  
 There is a new key `with` here, this is used to provide Input parameters to the action. In our case there are 3 such input parameters, all of them are optionals and github has ways to resolve the values in case no input is provided. We are writing them to make our build environment predictable and matching with the development enevironment.  
 
 ```yml
